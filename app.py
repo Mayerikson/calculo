@@ -48,6 +48,10 @@ def predict_probability(pais_origem, tipo_variedade, tipo_processamento, faixa_a
     
     return probability
 
+# Função para formatar valores com ponto como separador de milhares e vírgula como decimal
+def formatar_valor(valor):
+    return f"R$ {valor:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
+
 # 6. Interface do Streamlit
 st.title("Calculadora de Garantia de Café")
 
@@ -74,8 +78,12 @@ if st.sidebar.button("Calcular Garantia"):
     # Calcular o Valor Máximo a ser Liberado (70% do Valor da Garantia)
     valor_maximo_liberado = 0.7 * valor_garantia
     
+    # Formatar os valores
+    valor_garantia_formatado = formatar_valor(valor_garantia)
+    valor_maximo_liberado_formatado = formatar_valor(valor_maximo_liberado)
+    
     # Exibir os resultados
     st.write(f"### Resultados:")
     st.write(f"**Probabilidade de ser Premium:** {prob_premium:.2%}")
-    st.write(f"**Valor Aproximado da Garantia:** R$ {valor_garantia:,.2f}")
-    st.write(f"**Valor Máximo a ser Liberado:** R$ {valor_maximo_liberado:,.2f}")
+    st.write(f"**Valor Aproximado da Garantia:** {valor_garantia_formatado}")
+    st.write(f"**Valor Máximo a ser Liberado:** {valor_maximo_liberado_formatado}")
